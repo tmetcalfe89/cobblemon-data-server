@@ -17,6 +17,9 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  form: {
+    type: String,
+  },
   nationalPokedexNumber: {
     type: Number,
     required: true,
@@ -355,13 +358,13 @@ const schema = new mongoose.Schema({
     type: Number,
     default: 1
   },
-  // forms: {
-  //   type: [{
-  //     type: mongoose.Types.ObjectId,
-  //     ref: "Species"
-  //   }],
-  //   default: []
-  // },
+  forms: {
+    type: [{
+      type: mongoose.Types.ObjectId,
+      ref: "Species"
+    }],
+    default: []
+  },
   labels: {
     type: [{
       type: String
@@ -373,6 +376,10 @@ const schema = new mongoose.Schema({
   // },
   preEvolution: {
     type: String,
+  },
+  battleOnly: {
+    type: Boolean,
+    default: false,
   }
 });
 

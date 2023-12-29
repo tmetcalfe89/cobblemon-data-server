@@ -1,19 +1,22 @@
 const SpeciesModel = require("../models/Species");
 
+const findOne = (filter) => SpeciesModel.findOne({ ...filter, form: { $exists: false } }).populate({ path: "forms", select: "_id name form" });
+const findMany = (filter) => SpeciesModel.find({ ...filter, form: { $exists: false } }).select("name nationalPokedexNumber");
+
 module.exports = {
   getAll: async (req, res) => {
     const { filter } = req.body;
-    const results = await SpeciesModel.find(filter, "name nationalPokedexNumber");
+    const results = await findMany(filter);
     res.json(results);
   },
   getByName: async (req, res) => {
     const { name } = req.params;
-    const results = await SpeciesModel.findOne({ name });
+    const results = await findOne({ name });
     res.json(results);
   },
   getByNationalDexNumber: async (req, res) => {
     const { ndex } = req.params;
-    const results = await SpeciesModel.findOne({ nationalPokedexNumber: ndex });
+    const results = await findOne({ nationalPokedexNumber: ndex });
     res.json(results);
   }
 }

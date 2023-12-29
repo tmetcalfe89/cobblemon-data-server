@@ -23,8 +23,14 @@ mongoose.connect(MONGO_URI)
     await Promise.all(versions.map(async (version) => {
       const files = await walkPromised(path.join(TARGET_DIR, version, "common/src/main/resources/data/cobblemon/species"));
       await Promise.all(files.map(async (file) => {
-        const data = parseSpecies(await JSON.parse(await fs.readFile(file, { encoding: "utf-8" })))
-        await SpeciesModel.create({ ...data, version });
+        const data = await JSON.parse(await fs.readFile(file, { encoding: "utf-8" }))
+        const mainFormDoc = await SpeciesModel.create(parseSpecies({ ...data, version, forms: [] }));
+        await Promise.all(data.forms?.map(async form => {
+          const formData = parseSpecies({ ...data, ...form, name: data.name, form: form.name });
+          const formDoc = await SpeciesModel.create({ ...formData, version, forms: [] });
+          mainFormDoc.forms.push(formDoc._id);
+        }) || []);
+        await mainFormDoc.save();
       }))
     }))
   })

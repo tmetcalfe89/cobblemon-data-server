@@ -152,7 +152,7 @@ const schema = new mongoose.Schema({
       },
       source: {
         type: String,
-        enum: ["tm", "tutor", "egg", "form_change", "level"],
+        enum: movePrefixes,
         required: true,
       },
       level: {

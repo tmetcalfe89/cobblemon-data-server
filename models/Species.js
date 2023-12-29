@@ -9,6 +9,10 @@ const experienceGroup = require("../data/experienceGroup.json")
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
+  version: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

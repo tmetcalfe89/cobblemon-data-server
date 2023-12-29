@@ -10,5 +10,10 @@ module.exports = {
     const { name } = req.params;
     const results = await SpeciesModel.findOne({ name });
     res.json(results);
+  },
+  getByNationalDexNumber: async (req, res) => {
+    const { ndex } = req.params;
+    const results = await SpeciesModel.findOne({ nationalPokedexNumber: ndex });
+    res.json(results);
   }
 }

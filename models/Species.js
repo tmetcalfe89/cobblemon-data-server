@@ -17,6 +17,10 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sname: {
+    type: String,
+    required: true,
+  },
   form: {
     type: String,
   },

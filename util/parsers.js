@@ -1,8 +1,11 @@
 const parseSpecies = species => ({
   ...species,
   moves: species.moves.map(parseMove),
-  abilities: species.abilities.map(parseAbility)
+  abilities: species.abilities.map(parseAbility),
+  sname: parseStandardName(species.name)
 })
+
+const parseStandardName = name => name.toLowerCase().replaceAll(" ", "-").match(/[a-z-]/g).join("");
 
 const parseMove = move => {
   const [source, name] = move.split(":");

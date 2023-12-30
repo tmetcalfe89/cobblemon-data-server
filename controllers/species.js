@@ -11,7 +11,7 @@ module.exports = {
   },
   getByName: async (req, res) => {
     const { name } = req.params;
-    const results = await findOne({ name });
+    const results = await findOne({ sname: name });
     res.json(results);
   },
   getByNationalDexNumber: async (req, res) => {

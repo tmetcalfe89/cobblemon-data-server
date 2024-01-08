@@ -183,7 +183,7 @@ const schema = new mongoose.Schema({
       },
       times: {
         type: String,
-        enum: times,
+        enum: Object.keys(times),
         default: "night"
       },
       sleepChance: {

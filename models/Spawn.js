@@ -90,6 +90,15 @@ const schema = new mongoose.Schema({
     required: true,
   },
   pokemon: {
+    name: {
+      type: String,
+      required: true,
+    },
+    aspects: [{
+      type: String
+    }]
+  },
+  sname: {
     type: String,
     required: true,
   },
@@ -111,6 +120,13 @@ const schema = new mongoose.Schema({
     type: Range,
     required: true,
   }],
+});
+
+schema.virtual("species", {
+  ref: "Species",
+  localField: "sname",
+  foreignField: "sname",
+  justOne: true
 });
 
 module.exports = mongoose.model("Spawn", schema);

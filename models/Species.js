@@ -28,6 +28,9 @@ const schema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  aspects: [{
+    type: String
+  }],
   baseStats: {
     hp: {
       type: Number,
@@ -385,6 +388,13 @@ const schema = new mongoose.Schema({
     type: Boolean,
     default: false,
   }
+});
+
+schema.virtual("spawns", {
+  ref: "Spawn",
+  localField: "sname",
+  foreignField: "sname",
+  justOne: false
 });
 
 module.exports = mongoose.model("Species", schema);

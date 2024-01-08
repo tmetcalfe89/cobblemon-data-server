@@ -1,4 +1,4 @@
-const SpawnModel = require('../models/spawn');
+const SpawnModel = require('../models/Spawn');
 
 module.exports = {
   getAllFor: async (req, res) => {

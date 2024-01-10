@@ -34,7 +34,7 @@ const parsePokemon = pokemon => {
 
 const parseSpawnStandardName = pokemon => {
   const splitter = pokemon.split(" ")
-  return [splitter[0], ...splitter.slice(1).sort()].join(" ")
+  return [splitter[0], ...splitter.slice(1).sort()].join("-")
 }
 
 const parseRange = (rangesString, predefineds = {}) => rangesString ?
@@ -47,7 +47,7 @@ const parseRange = (rangesString, predefineds = {}) => rangesString ?
 
 const parseTriBoolean = input => (input === null || input === undefined) ? "n/a" : input ? "yes" : "no";
 
-const parseStandardName = ({ name, aspects = [] }) => [name.toLowerCase().replaceAll(" ", "-").match(/[a-z-]/g).join(""), ...aspects.sort()].join(" ");
+const parseStandardName = ({ name, aspects = [] }) => [name.toLowerCase().replaceAll(" ", "-").match(/[a-z-]/g).join(""), ...aspects.sort()].join("-");
 
 const parseMove = move => {
   const [source, name] = move.split(":");

@@ -40,6 +40,11 @@ app.get('/', async (req, res) => {
         }
       },
       { $match: filter },
+      {
+        $sort: {
+          sname: 1
+        }
+      },
       { $project: { pokemon: 1, ...Object.keys(filter).reduce((acc, k) => ({ ...acc, [k]: 1 }), {}) } }
     ],
     { maxTimeMS: 60000, allowDiskUse: true }

@@ -120,6 +120,9 @@ const schema = new mongoose.Schema({
     type: Range,
     required: true,
   }],
+  presets: [{
+    type: String,
+  }],
 });
 
 schema.virtual("species", {

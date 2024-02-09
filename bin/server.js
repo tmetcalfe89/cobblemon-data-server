@@ -2,8 +2,11 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
-const routes = require("../routes");
 const cors = require("cors");
+const handlebars = require("express-handlebars");
+const routes = require("../routes");
+const ifError = require("../util/ifError");
+const spawnsModel = require("../models/Spawn");
 
 const app = express();
 
@@ -13,6 +16,36 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
+
+app.engine('handlebars', handlebars.engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
+
+app.get('/', async (req, res) => {
+  const { q = btoa("{}") } = req.query;
+  const filter = ifError(() => JSON.parse(atob(q)), {});
+  const results = await spawnsModel.aggregate(
+    [
+      {
+        $lookup: {
+          as: 'species',
+          from: 'species',
+          foreignField: 'sname',
+          localField: 'sname'
+        }
+      },
+      {
+        $unwind: {
+          path: "$species",
+        }
+      },
+      { $match: filter },
+      { $project: { pokemon: 1, ...Object.keys(filter).reduce((acc, k) => ({ ...acc, [k]: 1 }), {}) } }
+    ],
+    { maxTimeMS: 60000, allowDiskUse: true }
+  );
+  res.render('search', { results });
+});
 
 mongoose.connect(MONGO_URI);
 app.listen(PORT);

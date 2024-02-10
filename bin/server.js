@@ -40,6 +40,13 @@ app.get('/', async (req, res) => {
           path: "$species",
         }
       },
+      {
+        $addFields: {
+          "species.drops": {
+            $ifNull: ["$drops", "$species.drops"]
+          }
+        }
+      },
       { $match: filter },
       {
         $sort: {

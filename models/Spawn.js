@@ -73,7 +73,7 @@ const Condition = new mongoose.Schema({
   }],
   structures: [{
     type: String,
-  }]
+  }],
 });
 
 const schema = new mongoose.Schema({
@@ -123,6 +123,34 @@ const schema = new mongoose.Schema({
   presets: [{
     type: String,
   }],
+  drops: {
+    type: {
+      entries: [{
+        percentage: {
+          type: Number
+        },
+        quantity: {
+          type: Number
+        },
+        maxSelectableTimes: {
+          type: Number
+        },
+        item: {
+          type: String
+        },
+        quantityRange: {
+          type: String
+        },
+        nbt: {
+          type: String
+        }
+      }],
+      amount: {
+        type: String,
+        default: "1-1"
+      }
+    }, default: undefined
+  }
 });
 
 schema.virtual("species", {

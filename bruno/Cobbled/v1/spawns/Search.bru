@@ -1,0 +1,23 @@
+meta {
+  name: Search
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{host}}/api/v1/spawns/search
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "filter": {
+      "species.drops.entries.item": "minecraft:ghast_tear"
+    },
+    "include": [
+      "species.drops.entries.item",
+      "species.drops.entries.percentage"
+    ]
+  }
+}
